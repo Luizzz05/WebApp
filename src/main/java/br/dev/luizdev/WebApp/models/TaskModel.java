@@ -2,10 +2,13 @@ package br.dev.luizdev.WebApp.models;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class TaskModel {
     
     private Long id;
     private String name;
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date date;
 
 
