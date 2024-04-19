@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import br.dev.luizdev.WebApp.models.TaskModel;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -19,29 +18,39 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class TaskController {
 
     List<TaskModel> taskModels = new ArrayList<>();
-    
+
     @GetMapping("/create")
     public String getCreateString(){
         return "create";
     }
-
+    
     @PostMapping("/create")
     public String postCreateString(TaskModel taskModel){
-        long id = taskModels.size() + 1l;
-
+        // System.out.println("O nome da tarefa é: " + taskModel.getName());
+        Long id = taskModels.size() + 1L;
+        
         taskModels.add(new TaskModel(id, taskModel.getName(), taskModel.getDate()));
 
         return "redirect:/list";
     }
-    @GetMapping("/edit/id")
-    public ModelAndView getEditString(@PathVariable("id") Long id){
-         
-        ModelAndView mv = new ModelAndView();
-
-        TaskModel taskModelFind = taskModels.stream().filter(taskModel -> id.equals(taskModel.getId())).findFirst().get();
-        
-        mv.addObject("taskModel", taskModelFind);
-
+    
+    @GetMapping("/list")
+    public ModelAndView getListString(){
+        ModelAndView mv = new ModelAndView("list");
+        mv.addObject("taskModels", taskModels);
         return mv;
     }
+
+    @GetMapping("/edit/{id}")
+    public ModelAndView getEditString(@PathVariable("id") Long id){
+        
+        ModelAndView mv = new ModelAndView("create");
+
+        TaskModel taskModelFind = taskModels.stream().filter(taskModel -> id.equals(taskModel.getId())).findFirst().get();
+
+        mv.addObject("taskModel", taskModelFind);
+        
+        return mv;
+    }
+
 }
