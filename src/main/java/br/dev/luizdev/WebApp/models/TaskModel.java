@@ -2,20 +2,20 @@ package br.dev.luizdev.WebApp.models;
 
 import java.util.Date;
 
-public class TaskModels {
+public class TaskModel {
     
     private Long id;
     private String name;
     private Date date;
 
 
-    public TaskModels(Long id, String name, Date date) {
+    public TaskModel(Long id, String name, Date date) {
         this.id = id;
         this.name = name;
         this.date = date;
     }
 
-    public TaskModels() {
+    public TaskModel() {
     }
 
     public Long getId() {
