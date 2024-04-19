@@ -19,17 +19,29 @@ public class TaskController {
 
     List<TaskModel> taskModels = new ArrayList<>();
 
-    @GetMapping("/create")
-    public String getCreateString(){
-        return "create";
+    @GetMapping("/")
+    public String getIdexString(TaskModel taskModel){
+        return "index";
     }
     
+    @GetMapping("/create")
+    public String getCreateString(TaskModel taskModel){
+        return "create";
+    }
+
     @PostMapping("/create")
     public String postCreateString(TaskModel taskModel){
         // System.out.println("O nome da tarefa é: " + taskModel.getName());
-        Long id = taskModels.size() + 1L;
-        
-        taskModels.add(new TaskModel(id, taskModel.getName(), taskModel.getDate()));
+
+        if(taskModel.getId() != null) {
+            TaskModel taskModelFind = taskModels.stream().filter(taskModelItem -> taskModel.getId().equals(taskModel.getId())).findFirst().get();
+            taskModels.set(taskModel.indexOf(taskModelFind), taskModel);
+        }else{
+            Long id = taskModels.size() + 1L;
+            
+            taskModels.add(new TaskModel(id, taskModel.getName(), taskModel.getDate()));
+
+        }
 
         return "redirect:/list";
     }

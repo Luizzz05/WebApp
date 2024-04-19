@@ -37,5 +37,10 @@ public class TaskModel {
         this.date = date;
     }
 
+    public int indexOf(TaskModel taskModelFind) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'indexOf'");
+    }
+
     
 }
